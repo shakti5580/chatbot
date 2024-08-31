@@ -22,6 +22,9 @@
     </div>
 
     <script>
+        let registrationStage = 0;
+        let userInfo = {};
+
         function sendMessage() {
             const userInput = document.getElementById('userInput').value;
             const chatbox = document.getElementById('chatbox');
@@ -39,17 +42,52 @@
         }
 
         function getResponse(message) {
-            // Simple response logic
-            if (message.toLowerCase().includes("hello")) {
-                return "Hi there! How can I help you today?";
-            } else if (message.toLowerCase().includes("register")) {
-                return "To register, please provide your name and contact information.";
-            } else {
-                return "I didn't understand that. Please type 'register' to start the registration process.";
+            switch (registrationStage) {
+                case 0:
+                    if (message.toLowerCase().includes("register")) {
+                        registrationStage++;
+                        return "To start the registration process, I need some details. What is your full name?";
+                    } else {
+                        return "I didn't understand that. Please type 'register' to start the registration process.";
+                    }
+                case 1:
+                    userInfo.name = message;
+                    registrationStage++;
+                    return "Thanks, " + userInfo.name + ". What is your contact number?";
+                case 2:
+                    userInfo.contact = message;
+                    registrationStage++;
+                    return "Got it. What is your email address?";
+                case 3:
+                    userInfo.email = message;
+                    registrationStage++;
+                    return "Great! What is your address?";
+                case 4:
+                    userInfo.address = message;
+                    registrationStage++;
+                    return "Thank you for providing all the details. Here's a summary:\n" +
+                           "Name: " + userInfo.name + "\n" +
+                           "Contact: " + userInfo.contact + "\n" +
+                           "Email: " + userInfo.email + "\n" +
+                           "Address: " + userInfo.address + "\n" +
+                           "Is everything correct? (Type 'yes' to confirm or 'no' to restart)";
+                case 5:
+                    if (message.toLowerCase() === 'yes') {
+                        registrationStage = 0;
+                        return "Your registration is complete. Thank you!";
+                    } else {
+                        registrationStage = 0;
+                        userInfo = {};
+                        return "Let's start over. Please type 'register' to begin the registration process again.";
+                    }
+                default:
+                    registrationStage = 0;
+                    return "I didn't understand that. Please type 'register' to start the registration process.";
             }
         }
     </script>
 </body>
 </html>
+
 
 
