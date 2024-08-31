@@ -6,9 +6,11 @@
     <title>Chatbot</title>
     <style>
         body { font-family: Arial, sans-serif; }
-        #chatbox { border: 1px solid #ddd; padding: 10px; width: 300px; height: 400px; overflow-y: scroll; }
-        #inputArea { display: flex; }
-        #userInput { flex: 1; }
+        #chatbox { border: 1px solid #ddd; padding: 10px; width: 300px; height: 400px; overflow-y: scroll; background-color: #f9f9f9; }
+        #inputArea { display: flex; margin-top: 10px; }
+        #userInput { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 10px 15px; border: none; border-radius: 4px; background-color: #007BFF; color: #fff; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
@@ -24,11 +26,15 @@
             const userInput = document.getElementById('userInput').value;
             const chatbox = document.getElementById('chatbox');
 
-            chatbox.innerHTML += `<p>You: ${userInput}</p>`;
+            // Display user message
+            chatbox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
             document.getElementById('userInput').value = '';
 
+            // Get and display chatbot response
             const response = getResponse(userInput);
-            chatbox.innerHTML += `<p>Bot: ${response}</p>`;
+            chatbox.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
+
+            // Scroll to the bottom of the chatbox
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
@@ -45,4 +51,5 @@
     </script>
 </body>
 </html>
+
 
