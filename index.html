@@ -3,77 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Registration Bot</title>
+    <title>Chatbot</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        #chatbox {
-            width: 80%;
-            max-width: 600px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-            height: 300px;
-            overflow-y: auto;
-        }
-        #userInput {
-            width: calc(100% - 100px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+        body { font-family: Arial, sans-serif; }
+        #chatbox { border: 1px solid #ddd; padding: 10px; width: 300px; height: 400px; overflow-y: scroll; }
+        #inputArea { display: flex; }
+        #userInput { flex: 1; }
     </style>
 </head>
 <body>
-    <h1>Farmer Registration Chatbot</h1>
+    <h1>Chatbot</h1>
     <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
+    <div id="inputArea">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
 
     <script>
         function sendMessage() {
             const userInput = document.getElementById('userInput').value;
-            document.getElementById('chatbox').innerHTML += `<p>You: ${userInput}</p>`;
+            const chatbox = document.getElementById('chatbox');
+
+            chatbox.innerHTML += `<p>You: ${userInput}</p>`;
             document.getElementById('userInput').value = '';
 
-            fetch('https://your-backend-url.herokuapp.com/webhook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: userInput })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chatbox').innerHTML += `<p>Bot: ${data.response}</p>`;
-            })
-            .catch(error => {
-                document.getElementById('chatbox').innerHTML += `<p>Error: ${error.message}</p>`;
-            });
+            const response = getResponse(userInput);
+            chatbox.innerHTML += `<p>Bot: ${response}</p>`;
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function getResponse(message) {
+            // Simple response logic
+            if (message.toLowerCase().includes("hello")) {
+                return "Hi there! How can I help you today?";
+            } else if (message.toLowerCase().includes("register")) {
+                return "To register, please provide your name and contact information.";
+            } else {
+                return "I didn't understand that. Please type 'register' to start the registration process.";
+            }
         }
     </script>
 </body>
 </html>
+
