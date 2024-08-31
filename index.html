@@ -5,12 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #chatbox { border: 1px solid #ddd; padding: 10px; width: 300px; height: 400px; overflow-y: scroll; background-color: #f9f9f9; }
-        #inputArea { display: flex; margin-top: 10px; }
-        #userInput { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        button { padding: 10px 15px; border: none; border-radius: 4px; background-color: #007BFF; color: #fff; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #chatbox {
+            border: 2px solid #444;
+            padding: 10px;
+            width: 300px;
+            height: 500px;
+            overflow-y: scroll;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #inputArea {
+            display: flex;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        p strong {
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
@@ -28,6 +88,8 @@
         function sendMessage() {
             const userInput = document.getElementById('userInput').value;
             const chatbox = document.getElementById('chatbox');
+
+            if (userInput.trim() === '') return;
 
             // Display user message
             chatbox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
@@ -53,25 +115,105 @@
                 case 1:
                     userInfo.name = message;
                     registrationStage++;
-                    return "Thanks, " + userInfo.name + ". What is your contact number?";
+                    return `Thanks, ${userInfo.name}. How old are you?`;
                 case 2:
-                    userInfo.contact = message;
+                    userInfo.age = message;
                     registrationStage++;
-                    return "Got it. What is your email address?";
+                    return "Got it. What is your gender?";
                 case 3:
-                    userInfo.email = message;
+                    userInfo.gender = message;
                     registrationStage++;
-                    return "Great! What is your address?";
+                    return "Thanks. What is your address, including state and district?";
                 case 4:
                     userInfo.address = message;
                     registrationStage++;
-                    return "Thank you for providing all the details. Here's a summary:\n" +
-                           "Name: " + userInfo.name + "\n" +
-                           "Contact: " + userInfo.contact + "\n" +
-                           "Email: " + userInfo.email + "\n" +
-                           "Address: " + userInfo.address + "\n" +
-                           "Is everything correct? (Type 'yes' to confirm or 'no' to restart)";
+                    return "What is your phone number?";
                 case 5:
+                    userInfo.phone = message;
+                    registrationStage++;
+                    return "What is your email address (optional)?";
+                case 6:
+                    userInfo.email = message;
+                    registrationStage++;
+                    return "Please provide your Aadhaar Number.";
+                case 7:
+                    userInfo.aadhaar = message;
+                    registrationStage++;
+                    return "Do you have a PAN Number? If yes, please provide it.";
+                case 8:
+                    userInfo.pan = message;
+                    registrationStage++;
+                    return "What is the name of your farm (if any)?";
+                case 9:
+                    userInfo.farmName = message;
+                    registrationStage++;
+                    return "What is the address of your farm?";
+                case 10:
+                    userInfo.farmAddress = message;
+                    registrationStage++;
+                    return "What type of farm do you have (e.g., crops, livestock, mixed)?";
+                case 11:
+                    userInfo.farmType = message;
+                    registrationStage++;
+                    return "What is the size of your farm (in acres or hectares)?";
+                case 12:
+                    userInfo.farmSize = message;
+                    registrationStage++;
+                    return "What type of farming do you use (e.g., organic, conventional)?";
+                case 13:
+                    userInfo.farmingType = message;
+                    registrationStage++;
+                    return "Please provide your bank account number.";
+                case 14:
+                    userInfo.bankAccount = message;
+                    registrationStage++;
+                    return "What is the name of your bank?";
+                case 15:
+                    userInfo.bankName = message;
+                    registrationStage++;
+                    return "What is your IFSC code?";
+                case 16:
+                    userInfo.ifscCode = message;
+                    registrationStage++;
+                    return "What types of produce do you have available (e.g., vegetables, grains, fruits)?";
+                case 17:
+                    userInfo.produceTypes = message;
+                    registrationStage++;
+                    return "Do you have any quality certifications (e.g., organic certification)?";
+                case 18:
+                    userInfo.certifications = message;
+                    registrationStage++;
+                    return "What is your preferred method of contact (phone or email)?";
+                case 19:
+                    userInfo.contactMethod = message;
+                    registrationStage++;
+                    return "Are there any specific requirements or conditions for selling your produce?";
+                case 20:
+                    userInfo.requirements = message;
+                    registrationStage++;
+                    return `Thank you for providing all the details. Here's a summary:
+                    Name: ${userInfo.name}
+                    Age: ${userInfo.age}
+                    Gender: ${userInfo.gender}
+                    Address: ${userInfo.address}
+                    Phone: ${userInfo.phone}
+                    Email: ${userInfo.email}
+                    Aadhaar: ${userInfo.aadhaar}
+                    PAN: ${userInfo.pan}
+                    Farm Name: ${userInfo.farmName}
+                    Farm Address: ${userInfo.farmAddress}
+                    Farm Type: ${userInfo.farmType}
+                    Farm Size: ${userInfo.farmSize}
+                    Farming Type: ${userInfo.farmingType}
+                    Bank Account: ${userInfo.bankAccount}
+                    Bank Name: ${userInfo.bankName}
+                    IFSC Code: ${userInfo.ifscCode}
+                    Produce Types: ${userInfo.produceTypes}
+                    Certifications: ${userInfo.certifications}
+                    Preferred Contact Method: ${userInfo.contactMethod}
+                    Requirements: ${userInfo.requirements}
+                    Is everything correct? (Type 'yes' to confirm or 'no' to restart)`;
+                case 21:
                     if (message.toLowerCase() === 'yes') {
                         registrationStage = 0;
                         return "Your registration is complete. Thank you!";
@@ -88,6 +230,3 @@
     </script>
 </body>
 </html>
-
-
-
